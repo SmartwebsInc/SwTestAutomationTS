@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { LoginPO } from '../page-objects/LoginPO';
-import { LogOutPO } from '../page-objects/LogOutPO';
+import { LoginPO } from '../../page-objects/login/LoginPO';
+import { LogOutPO } from '../../page-objects/login/LogOutPO';
 
 test.describe('Logout Tests', () => {
 	let loginPO: LoginPO;

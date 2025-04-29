@@ -25,15 +25,15 @@ export class LoginPO {
 		this.forgotPasswordForm = page.locator('input[placeholder*="Enter your username"]');
 	}
 
-	async login(username?: string, password?: string): Promise<void> {
+	async login(username?: string, password?: string) {
 		await expect(this.usernameInput).toBeVisible();
-		await this.page.waitForTimeout(200);
+		await this.page.waitForTimeout(400);
 		await this.usernameInput.fill(username ?? this.defaultUsername);
 		await this.passwordInput.fill(password ?? this.defaultPassword);
 		await this.loginButton.click();
 	}
 
-	async openLink(linkText: string): Promise<void> {
+	async openLink(linkText: string) {
 		await this.page.getByText(linkText).click();
 	}
 }
