@@ -30,7 +30,7 @@ export const baseTest = base.extend<BaseFixtures>({
 		await context.close();
 	},
 	api: async ({ }, use) => {
-		await use(new API(process.env.STORAGE_STATE_PATH!));
+		await use(new API());
 	},
 });
 

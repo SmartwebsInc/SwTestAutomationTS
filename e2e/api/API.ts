@@ -1,32 +1,26 @@
 import { OwnerUnitRequests } from './UnitRequests';
 import * as fs from 'fs';
+import * as path from 'path';
 
-interface Cookie {
-    name: string;
-    value: string;
+export function getAccessTokenFromSessionStorage(): string {
+	const sessionStoragePath = path.join(__dirname, '../auth/session-storage.json');
+	const storageContents = fs.readFileSync(sessionStoragePath, 'utf8');
+	const parsedContents = JSON.parse(storageContents);
+    
+	// Find the oidc.user key
+	const userDataKey = Object.keys(parsedContents).find(key => key.includes('oidc.user'));
+	if (!userDataKey) return '';
+    
+	// Parse the user data string and extract access_token
+	const userData = JSON.parse(parsedContents[userDataKey]);
+	return userData.access_token || '';
 }
 export class API {
 	readonly ownerUnitRequests: OwnerUnitRequests;
 	readonly bearerToken: string;
 
-	constructor(storageStatePath: string) {
+	constructor() {
 		this.ownerUnitRequests = new OwnerUnitRequests();
-
-		const cookiesPaths = {
-			sa: `${storageStatePath}/sa.json`,
-		};
-
-		const readStorageState = (path: string): Cookie[] => {
-			const storageStateContents = fs.readFileSync(path, 'utf8');
-			const parsedContents = JSON.parse(storageStateContents);
-			return parsedContents.cookies;
-		};
-
-		const findAccessToken = (cookies: Cookie[]): string => {
-			const accessTokenCookie = cookies.find((item: Cookie) => item.name === 'Smartwebs.Sts.Smartweb.Sts');
-			return accessTokenCookie ? accessTokenCookie.value : '';
-		};
-
-		this.bearerToken = findAccessToken(readStorageState(cookiesPaths.sa));
+		this.bearerToken = getAccessTokenFromSessionStorage();
 	}
 }

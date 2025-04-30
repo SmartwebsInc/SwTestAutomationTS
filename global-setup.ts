@@ -37,9 +37,21 @@ async function globalSetup(config: FullConfig) {
 		// Call the login method for super admin
 		await loginPO.login(process.env.ACC_SUPER_ADMIN_USERNAME, process.env.SUPER_ADMIN_PASSWORD);
 
+		// ✅ Extract sessionStorage and save to file
+		const sessionData = await page.evaluate(() => {
+			const session: Record<string, string | null> = {};
+			for (let i = 0; i < sessionStorage.length; i++) {
+				const key = sessionStorage.key(i);
+				if (key) session[key] = sessionStorage.getItem(key);
+			}
+			return session;
+		});
+
+		await fs.writeJSON('./e2e/auth/session-storage.json', sessionData, { spaces: 2 });
+
 		// Save super admin storage state
 		await context.storageState({
-			path: './e2e/auth/sa.json',
+			path: './e2e/auth/sa-storage-state.json',
 		});
 
 		console.log('Super Admin Storage State Saved');

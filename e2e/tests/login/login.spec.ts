@@ -4,7 +4,7 @@ import { LoginPO } from '../../page-objects/login/LoginPO';
 import { Context } from 'vm';
 
 test.describe('Login Tests', () => {
-	test.use({ storageState: 'e2e/auth/sa.json' });
+	test.use({ storageState: 'e2e/auth/sa-storage-state.json' });
 	let page: Page;
 	let context: Context;
 	let loginPO: LoginPO;
@@ -23,7 +23,7 @@ test.describe('Login Tests', () => {
 		console.log('Bearer Token:', api.bearerToken);
 		await api.ownerUnitRequests.createOwnerUnit(request, api.bearerToken, await api.ownerUnitRequests.defaultOwnerUnitValues('John', 'Doe'));
 
-		let contextNew = await browser.newContext({ storageState: 'e2e/auth/sa.json' });
+		let contextNew = await browser.newContext({ storageState: 'e2e/auth/sa-storage-state.json' });
 		let pageNew = await contextNew.newPage();
 		await pageNew.goto('');
 		await pageNew.waitForTimeout(20000);
