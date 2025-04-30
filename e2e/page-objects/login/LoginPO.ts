@@ -32,7 +32,7 @@ export class LoginPO {
 		await this.passwordInput.fill(password ?? this.defaultPassword);
 		await Promise.all([
 			this.loginButton.click(),
-			this.page.waitForResponse(resp => resp.url().includes('/token') && resp.status() === 200)
+			this.page.waitForResponse(resp => resp.url().includes('/token') && resp.status() === 200),
 		]);
 	}
 

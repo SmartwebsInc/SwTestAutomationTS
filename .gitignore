@@ -9,6 +9,8 @@ package-lock.json
 /playwright/.cache/
 /reports/
 summary.json
+.env
+e2e/auth/
 
 # IDE - VSCode
 .vscode/*
@@ -20,4 +22,3 @@ summary.json
 # System Files
 .DS_Store
 Thumbs.db
-.env

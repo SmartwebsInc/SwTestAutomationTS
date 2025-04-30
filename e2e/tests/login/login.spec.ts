@@ -4,7 +4,7 @@ import { LoginPO } from '../../page-objects/login/LoginPO';
 import { Context } from 'vm';
 
 test.describe('Login Tests', () => {
-test.use({ storageState: 'e2e/auth/sa.json' });
+	test.use({ storageState: 'e2e/auth/sa.json' });
 	let page: Page;
 	let context: Context;
 	let loginPO: LoginPO;

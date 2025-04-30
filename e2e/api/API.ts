@@ -1,4 +1,4 @@
-import { OwnerUnitRequests } from "./UnitRequests";
+import { OwnerUnitRequests } from './UnitRequests';
 import * as fs from 'fs';
 
 interface Cookie {
@@ -10,7 +10,7 @@ export class API {
 	readonly bearerToken: string;
 
 	constructor(storageStatePath: string) {
-        this.ownerUnitRequests = new OwnerUnitRequests();
+		this.ownerUnitRequests = new OwnerUnitRequests();
 
 		const cookiesPaths = {
 			sa: `${storageStatePath}/sa.json`,
