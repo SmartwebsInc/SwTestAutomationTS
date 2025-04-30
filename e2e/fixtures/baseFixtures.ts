@@ -1,14 +1,15 @@
 import { test as base, Browser, BrowserContext, Page, TestInfo } from '@playwright/test';
 import * as path from 'path';
+import { API } from '../api/API';
 
 // Extend basic test fixtures
 export type BaseFixtures = {
     attachVideos: void;
     context: BrowserContext;
+    api: API;
 };
 
 export const baseTest = base.extend<BaseFixtures>({
-	// Add video recording for failed tests
 	attachVideos: async ({ }, use, testInfo: TestInfo) => {
 		await use();
         
@@ -19,8 +20,6 @@ export const baseTest = base.extend<BaseFixtures>({
 			});
 		}
 	},
-
-	// Custom context with video recording
 	context: async ({ browser }, use) => {
 		const context = await browser.newContext({
 			recordVideo: {
@@ -29,6 +28,9 @@ export const baseTest = base.extend<BaseFixtures>({
 		});
 		await use(context);
 		await context.close();
+	},
+	api: async ({ }, use) => {
+		await use(new API(process.env.STORAGE_STATE_PATH!));
 	},
 });
 

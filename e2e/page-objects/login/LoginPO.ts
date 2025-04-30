@@ -30,7 +30,10 @@ export class LoginPO {
 		await this.page.waitForTimeout(400);
 		await this.usernameInput.fill(username ?? this.defaultUsername);
 		await this.passwordInput.fill(password ?? this.defaultPassword);
-		await this.loginButton.click();
+		await Promise.all([
+			this.loginButton.click(),
+			this.page.waitForResponse(resp => resp.url().includes('/token') && resp.status() === 200)
+		]);
 	}
 
 	async openLink(linkText: string) {

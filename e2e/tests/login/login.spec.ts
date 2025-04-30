@@ -1,18 +1,32 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../../fixtures/baseFixtures';
+import { Page, Browser } from '@playwright/test';
 import { LoginPO } from '../../page-objects/login/LoginPO';
+import { Context } from 'vm';
 
 test.describe('Login Tests', () => {
+test.use({ storageState: 'e2e/auth/sa.json' });
+	let page: Page;
+	let context: Context;
 	let loginPO: LoginPO;
 
-	test.beforeEach(async ({ page }) => {
+	test.beforeEach(async ({ browser }) => {
+		context = await browser.newContext();
+		page = await context.newPage();
 		await page.goto('');
 		loginPO = new LoginPO(page);
 	});
 
-	test('should successfully sign in with correct credentials', async ({ page }) => {
-		await loginPO.login(process.env.ACC_SUPER_ADMIN_USERNAME, process.env.SUPER_ADMIN_PASSWORD);
-		await expect(page.getByText('All Associations').first()).toBeVisible({ timeout: 20000 });
+	test('QWERTY should successfully sign in with correct credentials', async ({ browser, request, api }) => {
+		await expect(page.getByText('All Associations').first()).toBeVisible({ timeout: 30000 });
 		await expect(page).toHaveURL(/.*\/#\/dashboard/);
+
+		console.log('Bearer Token:', api.bearerToken);
+		await api.ownerUnitRequests.createOwnerUnit(request, api.bearerToken, await api.ownerUnitRequests.defaultOwnerUnitValues('John', 'Doe'));
+
+		let contextNew = await browser.newContext({ storageState: 'e2e/auth/sa.json' });
+		let pageNew = await contextNew.newPage();
+		await pageNew.goto('');
+		await pageNew.waitForTimeout(20000);
 	});
 
 	test('should display an error message for invalid credentials', async () => {
