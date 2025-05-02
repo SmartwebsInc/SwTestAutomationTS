@@ -1,4 +1,5 @@
-import { OwnerUnitRequests } from './UnitRequests';
+import { UnitRequests } from './UnitRequests';
+import { AssociationRequests } from './AssociationRequests';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -15,12 +16,15 @@ export function getAccessTokenFromSessionStorage(): string {
 	const userData = JSON.parse(parsedContents[userDataKey]);
 	return userData.access_token || '';
 }
+
 export class API {
-	readonly ownerUnitRequests: OwnerUnitRequests;
+	readonly ownerUnitRequests: UnitRequests;
+	readonly associationRequests: AssociationRequests;
 	readonly bearerToken: string;
 
 	constructor() {
-		this.ownerUnitRequests = new OwnerUnitRequests();
+		this.ownerUnitRequests = new UnitRequests();
+		this.associationRequests = new AssociationRequests();
 		this.bearerToken = getAccessTokenFromSessionStorage();
 	}
 }

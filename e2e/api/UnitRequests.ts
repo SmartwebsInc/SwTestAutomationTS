@@ -1,8 +1,8 @@
 import { APIRequestContext, expect } from '@playwright/test';
 import { OwnerUnitData } from './APItypes';
 
-export class OwnerUnitRequests {
-	async defaultOwnerUnitValues(ownerFirstName: string, ownerLastName: string): Promise<OwnerUnitData> {
+export class UnitRequests {
+	async defaultUnitValues(ownerFirstName: string, ownerLastName: string): Promise<OwnerUnitData> {
 		return ({
 			owner: {
 				MailingAddress: '693 Terry St SE',
@@ -48,8 +48,7 @@ export class OwnerUnitRequests {
 		});
 	}
     
-	async createOwnerUnit(request: APIRequestContext, bearerToken: string, ownerUnitData: OwnerUnitData) {
-		console.log('Making API request with token:', bearerToken);
+	async createUnit(request: APIRequestContext, bearerToken: string, ownerUnitData: OwnerUnitData) {
 		const createOwnerResponse = await request.post(
 			'SWWebservice/Services/UnitsArea/UnitsAreaService.svc/SaveOwnerUnitEx',
 			{
@@ -61,8 +60,6 @@ export class OwnerUnitRequests {
 				},
 			},
 		);
-		console.log('Response status:', createOwnerResponse.status());
-		console.log('Response headers:', await createOwnerResponse.headersArray());
         
 		if (createOwnerResponse.status() !== 200) {
 			const responseText = await createOwnerResponse.text();

@@ -21,7 +21,7 @@ test.describe('Login Tests', () => {
 		await expect(page).toHaveURL(/.*\/#\/dashboard/);
 
 		console.log('Bearer Token:', api.bearerToken);
-		await api.ownerUnitRequests.createOwnerUnit(request, api.bearerToken, await api.ownerUnitRequests.defaultOwnerUnitValues('John', 'Doe'));
+		await api.ownerUnitRequests.createUnit(request, api.bearerToken, await api.ownerUnitRequests.defaultUnitValues('John', 'Doe'));
 
 		let contextNew = await browser.newContext({ storageState: 'e2e/auth/sa-storage-state.json' });
 		let pageNew = await contextNew.newPage();
