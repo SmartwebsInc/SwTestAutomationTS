@@ -150,3 +150,54 @@ export type AssociationRequest = {
     geoCodeSettings: GeoCodeSettings;
     markSiteLive: boolean;
 }
+
+export type ViolationData = {
+    associationIdEnc: string;
+    userIdEnc: string;
+    unitIdEnc: string;
+    categoryIdEnc: string;
+    subCategoryIdEnc: string;
+    locationIdEnc: string;
+    stageIdEnc: string;
+    tempDocFKID: string;
+    includePdfInLetter: boolean;
+    sendViolation: boolean;
+    reasonText: string;
+    letterText: string;
+    fine: number;
+    cure: number;
+    notes: string | null;
+}
+
+export type WorkOrder = {
+    PriorityIdEncrypted: string;
+    StatusIdEncrypted: string;
+    ManagementIdEncrypted: string;
+    AssociationIdEncrypted: string;
+    CreatedByUserIdEncrypted: string;
+    IsPreWo: boolean;
+    ReportedFromTypeIdEncrypted: string;
+    ReportedBy: string;
+    ReportedDate: string;
+    UnitIdEncrypted: string;
+    OwnerIdEncrypted: string;
+    UnitAddress: string;
+    Owner: string;
+    CategoryIdEncrypted: string;
+    Category: string;
+    SubCategoryIdEncrypted: string;
+    SubCategory: string;
+    Name: string;
+    CustomActivityNote: string;
+    CustomActivityNoteIsPublic: boolean;
+    EmailResidents: string[];
+    TrackingEmails: string;
+    MustCompleteByDate: string;
+    LastUpdatedByUserIdEncrypted: string;
+    DocumentsToSave: any[];
+    DocumentsToDelete: any[];
+}
+
+export type WorkOrderRequest = {
+    workOrder: WorkOrder;
+}

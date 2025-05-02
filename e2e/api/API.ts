@@ -1,5 +1,7 @@
 import { UnitRequests } from './UnitRequests';
 import { AssociationRequests } from './AssociationRequests';
+import { ViolationRequests } from './ViolationRequests';
+import { WorkOrderRequests } from './WorkOrderRequests';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -20,11 +22,15 @@ export function getAccessTokenFromSessionStorage(): string {
 export class API {
 	readonly ownerUnitRequests: UnitRequests;
 	readonly associationRequests: AssociationRequests;
+	readonly violationRequests: ViolationRequests;
+	readonly workOrderRequests: WorkOrderRequests;
 	readonly bearerToken: string;
 
 	constructor() {
 		this.ownerUnitRequests = new UnitRequests();
 		this.associationRequests = new AssociationRequests();
+		this.violationRequests = new ViolationRequests();
+		this.workOrderRequests = new WorkOrderRequests();
 		this.bearerToken = getAccessTokenFromSessionStorage();
 	}
 }
