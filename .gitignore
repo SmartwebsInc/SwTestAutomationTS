@@ -2,6 +2,9 @@
 node_modules/
 package-lock.json
 
+# Environment variables
+.env
+
 # Playwright specific
 /test-results/
 /playwright-report/
@@ -9,7 +12,6 @@ package-lock.json
 /playwright/.cache/
 /reports/
 summary.json
-.env
 e2e/auth/
 
 # IDE - VSCode

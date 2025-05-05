@@ -3,7 +3,7 @@ import { LoginPO } from '../../page-objects/login/LoginPO';
 import { UserManagementPO } from '../../page-objects/association/UserManagmentPO';
 import { UserFormPO } from '../../page-objects/association/UserFormPO';
 import { NavigationHelper } from '../../page-objects/helpers/NavigationHelper';
-import { BaseFixtures } from '../../fixtures/baseFixtures';
+import { BaseFixtures } from '../../fixtures/BasePages';
 
 test.describe('Association Users Tests', () => {
 	let loginPO: LoginPO;
@@ -97,7 +97,7 @@ test.describe('Association Users Tests', () => {
 		await userForm.usernameInput.fill('Test Cypress');
 		await userForm.emailInput.fill('CypressTestEmail@mail.com');
 
-		await userForm.commonPO.closeDrawer.click();
+		await userForm.commonPO.closeDrawerIcon.click();
 		await expect(userForm.addUserDrawer).not.toBeVisible();
 	});
 
@@ -130,7 +130,7 @@ test.describe('Association Users Tests', () => {
 		await userForm.cellPhoneInput.fill('6418529635');
 		await userForm.invalidEmailSelect.selectOption('No');
 
-		await userForm.commonPO.closeDrawer.click();
+		await userForm.commonPO.closeDrawerIcon.click();
 		await page.waitForTimeout(200);
 		await page.reload();
 

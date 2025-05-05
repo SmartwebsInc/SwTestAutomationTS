@@ -15,24 +15,24 @@ const config: PlaywrightTestConfig = {
 	workers: process.env.CI ? 4 : 4,
 	reporter: process.env.CI ? [
 		['list', { outputFolder: 'reports/list/' }],
-		['playwright-qase-reporter',
-			{
-				debug: false,
-				testops: {
-					mode: 'testops',
-					api: {
-						token: process.env.QASE_API_TOKEN,
-					},
-					project: process.env.QASE_PROJECT_CODE,
-					basePath: process.env.QASE_API_BASE_URL,
-					uploadAttachments: true,
-					run: {
-						complete: true,
-						id: process.env.QASE_RUN_ID,
-					},
-				},
-			},
-		],
+		// ['playwright-qase-reporter',
+		// 	{
+		// 		debug: false,
+		// 		testops: {
+		// 			mode: 'testops',
+		// 			api: {
+		// 				token: process.env.QASE_API_TOKEN,
+		// 			},
+		// 			project: process.env.QASE_PROJECT_CODE,
+		// 			basePath: process.env.QASE_API_BASE_URL,
+		// 			uploadAttachments: true,
+		// 			run: {
+		// 				complete: true,
+		// 				id: process.env.QASE_RUN_ID,
+		// 			},
+		// 		},
+		// 	},
+		// ],
 		['html', { outputFolder: 'reports/html/' }],
 		['blob', { outputDir: 'all-blob-reports' }],
 		['./testcase-updates-reporter.ts'],

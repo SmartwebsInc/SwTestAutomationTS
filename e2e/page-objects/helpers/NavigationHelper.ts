@@ -41,40 +41,36 @@ export class NavigationHelper {
 		return this._page.locator(`.sw-drop-menu-item-label:text-is('${optionName}')`);
 	}
 
-	public async manageMenuNavigation(...menuItems: (string | null)[]) {
+	public async manageMenuNavigation(...menuItems: string[]) {
 		await this.gearToggle.click();
 		await this._page.waitForTimeout(500);
 
 		await this.manageButton.click();
 		await this._page.waitForTimeout(500);
 
-		const filteredItems = menuItems.filter((item): item is string => item !== null);
-
-		for (let i = 0; i < filteredItems.length; i++) {
-			const optionLocator = this.getManageOption(filteredItems[i]);
+		for (let i = 0; i < menuItems.length; i++) {
+			const optionLocator = this.getManageOption(menuItems[i]);
 			await expect(optionLocator).toBeVisible();
 			await this._page.waitForTimeout(200);
 
-			if (i < filteredItems.length - 1) {
+			if (i < menuItems.length - 1) {
 				await optionLocator.hover();
 			}
 
-			if (i === filteredItems.length - 1) {
+			if (i === menuItems.length - 1) {
 				await optionLocator.click();
 			}
 		}
 	}
 
-	public async leftMenuNavigation(...menuItems: (string | null)[]) {
+	public async leftMenuNavigation(...menuItems: string[]) {
 		await this.hamburgerMenu.click();
 		await this._page.waitForTimeout(500);
 
-		const filteredItems = menuItems.filter((item): item is string => item !== null);
-
-		for (let i = 0; i < filteredItems.length; i++) {
+		for (let i = 0; i < menuItems.length; i++) {
 			const locator = i === 0
-				? this.leftMenuItem.filter({ hasText: filteredItems[i] })
-				: this.leftMenuSubItem.filter({ hasText: filteredItems[i] });
+				? this.leftMenuItem.filter({ hasText: menuItems[i] })
+				: this.leftMenuSubItem.filter({ hasText: menuItems[i] });
 
 			await expect(locator).toBeVisible();
 			await locator.click();

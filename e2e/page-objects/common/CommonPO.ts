@@ -6,8 +6,9 @@ export class CommonPO {
 	public readonly saveButton: Locator;
 	public readonly cancelButton: Locator;
 	public readonly updateButton: Locator;
-	public readonly expandDrawer: Locator;
-	public readonly closeDrawer: Locator;
+	public readonly expandDrawerIcon: Locator;
+	public readonly closeDrawerIcon: Locator;
+	public readonly closeModalIcon: Locator;
 	public readonly yesButton: Locator;
 
 	// Print Options Dialog Locators
@@ -29,8 +30,9 @@ export class CommonPO {
 		this.saveButton = page.getByRole('button', { name: 'Save' });
 		this.cancelButton = page.getByRole('button', { name: 'Cancel' });
 		this.updateButton = page.getByRole('button', { name: 'Update', exact: true });
-		this.expandDrawer = page.locator('.toggle-button-expanded.ng-star-inserted div').nth(0);
-		this.closeDrawer = page.locator('.toggle-button-expanded.ng-star-inserted div').nth(1);
+		this.expandDrawerIcon = page.locator('.toggle-button-expanded div').nth(0);
+		this.closeDrawerIcon = page.locator('.toggle-button-expanded div').nth(1);
+		this.closeModalIcon = page.locator('button.close');
 		this.yesButton = page.getByRole('button', { name: 'Yes' });
 
 		// Initialize Print Options Dialog Locators

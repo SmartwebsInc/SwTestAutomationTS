@@ -5,7 +5,7 @@ import { ProfilePO } from '../../page-objects/dashboard/ProfilePO';
 import { PreferencesPO } from '../../page-objects/dashboard/PreferencesPO';
 import { CommonPO } from '../../page-objects/common/CommonPO';
 import { SearchPO } from '../../page-objects/dashboard/SearchPO';
-import { BaseFixtures } from '../../fixtures/baseFixtures';
+import { BaseFixtures } from '../../fixtures/BasePages';
 
 test.describe('Dashboard Tests', () => {
 	let loginPage: LoginPO;

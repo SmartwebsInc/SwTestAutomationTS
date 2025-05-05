@@ -1,4 +1,4 @@
-import { test, expect } from '../../fixtures/baseFixtures';
+import { test, expect } from '../../fixtures/BasePages';
 import { Page, Browser } from '@playwright/test';
 import { LoginPO } from '../../page-objects/login/LoginPO';
 import { Context } from 'vm';
