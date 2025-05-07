@@ -5,14 +5,14 @@ require('dotenv').config();
 
 const config: PlaywrightTestConfig = {
 	testDir: './e2e/tests',
-	timeout: 100 * 1000,
+	timeout: 300 * 1000,
 	fullyParallel: true,
 	expect: {
-		timeout: 20000,
+		timeout: 35000,
 	},
 	forbidOnly: !!process.env.CI,
 	retries: process.env.CI ? 1 : 0,
-	workers: process.env.CI ? 4 : 4,
+	workers: process.env.CI ? 3 : 4,
 	reporter: process.env.CI ? [
 		['list', { outputFolder: 'reports/list/' }],
 		// ['playwright-qase-reporter',

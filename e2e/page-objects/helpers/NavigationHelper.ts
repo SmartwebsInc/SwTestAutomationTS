@@ -4,6 +4,7 @@ export class NavigationHelper {
 	private readonly _page: Page;
 	public readonly hamburgerMenu: Locator;
 	public readonly leftMenuItem: Locator;
+	public readonly sublistHelperLocator: Locator;
 	public readonly leftMenuSubItem: Locator;
 	public readonly gearToggle: Locator;
 	public readonly manageButton: Locator;
@@ -15,7 +16,8 @@ export class NavigationHelper {
 		this._page = page;
 		this.hamburgerMenu = page.locator('#sw-hamburger');
 		this.leftMenuItem = page.locator('.menu-item-title');
-		this.leftMenuSubItem = page.locator('.sub-menu-item-title');
+		this.sublistHelperLocator = page.locator('ul.lsm-sub-list').last();
+		this.leftMenuSubItem = this.sublistHelperLocator.locator('.sub-menu-item-title');
 		this.gearToggle = page.locator('div[ng-click="$ctrl.toggleTopMenu()"]');
 		this.manageButton = page.locator('.item-header.item-parent-header', { hasText: 'Manage' });
 		this.associationDropdown = page.locator('.header-name');
@@ -34,7 +36,13 @@ export class NavigationHelper {
 	public async selectAssociationDropdown(associationName: string) {
 		await this.associationDropdown.click();
 		await this.searchAssociationInput.pressSequentially(associationName);
-		await this.getAssociationOption(associationName).click();
+		await Promise.all([
+			this.getAssociationOption(associationName).click(),
+			this._page.waitForResponse(
+				response => response.url().includes('SWWebservice/Services/Simple/CommonService.svc/GetUserRights') && response.status() === 200,
+			),
+		]);
+
 	}
 
 	public getManageOption(optionName: string): Locator {
@@ -66,15 +74,30 @@ export class NavigationHelper {
 	public async leftMenuNavigation(...menuItems: string[]) {
 		await this.hamburgerMenu.click();
 		await this._page.waitForTimeout(500);
-
+	
 		for (let i = 0; i < menuItems.length; i++) {
-			const locator = i === 0
-				? this.leftMenuItem.filter({ hasText: menuItems[i] })
-				: this.leftMenuSubItem.filter({ hasText: menuItems[i] });
-
-			await expect(locator).toBeVisible();
-			await locator.click();
-			await this._page.waitForTimeout(300);
+	
+			const items = i === 0
+				? await this.leftMenuItem.all()
+				: await this.leftMenuSubItem.all();
+	
+			let matched = false;
+	
+			for (const item of items) {
+				const text = await item.textContent();
+				if (text?.trim() === menuItems[i]) {
+					await expect(item).toBeVisible();
+					await item.click();
+					await this._page.waitForTimeout(300);
+					matched = true;
+					break;
+				}
+			}
+	
+			if (!matched) {
+				throw new Error(`Menu item not found: "${menuItems[i]}"`);
+			}
 		}
 	}
+	
 }

@@ -58,13 +58,6 @@ async function globalSetup(config: FullConfig) {
 
 		await page.close();
 
-		// Copy any necessary test data or configurations
-		try {
-			await fs.copy('./e2e/testData', './reports/testData/', { overwrite: true });
-		} catch (error) {
-			console.log('No test data to copy or error copying:', error);
-		}
-
 	} catch (error) {
 		console.error('Error during global setup:', error);
 		throw error;

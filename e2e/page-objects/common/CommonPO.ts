@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 
 export class CommonPO {
 	private readonly _page: Page;
@@ -49,4 +49,40 @@ export class CommonPO {
 		this.emailButton = this.modal.getByRole('button', { name: 'Email' });
 		this.postButton = this.modal.getByRole('button', { name: 'Post' });
 	}
+
+	public async checkTextOnPageOrIframe(text: string) {
+		await this._page.waitForLoadState('load');
+		// First, try to find text in main document
+		const h1 = this._page.locator('h1', { hasText: text });
+		if (await h1.first().isVisible()) {
+			await expect(h1.first()).toContainText(text);
+			return;
+		}
+	
+		const plainText = this._page.getByText(text, { exact: true });
+		if (await plainText.first().isVisible()) {
+			await expect(plainText.first()).toBeVisible();
+			return;
+		}
+	
+		// If not found, check all iframes
+		const frames = this._page.frames();
+		for (const frame of frames) {
+			const frameLocator = frame.locator('h1', { hasText: text });
+			if (await frameLocator.first().isVisible().catch(() => false)) {
+				await expect(frameLocator.first()).toContainText(text);
+				return;
+			}
+	
+			const frameText = frame.getByText(text, { exact: true });
+			if (await frameText.first().isVisible().catch(() => false)) {
+				await expect(frameText.first()).toBeVisible();
+				return;
+			}
+		}
+	
+		// If nothing found
+		throw new Error(`Expected text "${text}" not found on page or iframes.`);
+	}
+	
 }
