@@ -42,6 +42,7 @@ export class NavigationHelper {
 				response => response.url().includes('SWWebservice/Services/Simple/CommonService.svc/GetUserRights') && response.status() === 200,
 			),
 		]);
+		await this._page.waitForTimeout(500);
 
 	}
 

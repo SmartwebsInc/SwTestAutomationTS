@@ -53,16 +53,14 @@ export class CommonPO {
 	public async checkTextOnPageOrIframe(text: string) {
 		await this._page.waitForLoadState('load');
 		// First, try to find text in main document
-		const h1 = this._page.locator('h1', { hasText: text });
-		if (await h1.first().isVisible()) {
-			await expect(h1.first()).toContainText(text);
-			return;
-		}
-	
-		const plainText = this._page.getByText(text, { exact: true });
-		if (await plainText.first().isVisible()) {
-			await expect(plainText.first()).toBeVisible();
-			return;
+		const h1 = this._page.locator('h1').first();
+		const fallbackText = this._page.getByText(text, { exact: true }).first();
+
+		if (await h1.isVisible()) {
+			const h1Text = h1.getByText(text, { exact: true });
+			await expect(h1Text).toBeVisible();
+		} else if (await fallbackText.isVisible()) {
+			await expect(fallbackText).toBeVisible();
 		}
 	
 		// If not found, check all iframes

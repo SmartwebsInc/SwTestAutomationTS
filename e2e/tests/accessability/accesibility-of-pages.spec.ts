@@ -174,7 +174,7 @@ test.describe('Page Load', () => {
 			menuPath: ['Violations', 'More', 'Config Overview'],
 		},
 	];
-	test('Check pages loaded', async ({ page, helpers, navigationHelper, morePO, commonPO }) => {
+	test('Check Violation pages loaded', async ({ page, helpers, navigationHelper, morePO, commonPO }) => {
 		try {
 			await Promise.all([
 				page.goto('/'),
@@ -187,13 +187,30 @@ test.describe('Page Load', () => {
 
 				await expect(page).toHaveURL(webPage.url);
 
-				await (webPage.pageName === 'Association Options'
-					? expect(page.locator('#legacy-iframe').contentFrame().getByText('Violation email option')).toBeVisible()
-					: webPage.pageName === 'Multi-Violation policy'
-						? expect(page.locator('#legacy-iframe').contentFrame().locator('#UltraWebTab1__ctl7_PolicyList_UltraWebTab1__ctl3_frmMultiViolLtrs').contentFrame().locator('#SpnMultViolLtrSaveNew')).toBeVisible()
-						: webPage.pageName === 'Config Overview'
-							? expect(page.locator('#legacy-iframe').contentFrame().getByText('Critical info missing:')).toBeVisible()
-							: Promise.resolve());
+				const legacyFrame = await page.locator('#legacy-iframe').contentFrame();
+
+				switch (webPage.pageName) {
+					case 'Association Options':
+						await expect(legacyFrame.getByText('Violation email option')).toBeVisible();
+						break;
+
+					case 'Multi-Violation policy': {
+						const innerFrame = await legacyFrame
+							.locator('#UltraWebTab1__ctl7_PolicyList_UltraWebTab1__ctl3_frmMultiViolLtrs')
+							.contentFrame();
+
+						await expect(innerFrame.locator('#SpnMultViolLtrSaveNew')).toBeVisible();
+						break;
+					}
+
+					case 'Config Overview':
+						await expect(legacyFrame.getByText('Critical info missing:')).toBeVisible();
+						break;
+
+					default:
+					// No validation needed
+						break;
+				}
 
 				await commonPO.checkTextOnPageOrIframe(webPage.expectedText);
 
@@ -213,4 +230,166 @@ test.describe('Page Load', () => {
 			await page.context().close();
 		}
 	});
+
+	const availableWorkOrders: PageInfo[] = [
+		{
+			pageName: 'Dashboard',
+			url: '#/workorders/dashboard',
+			expectedText: 'Work Orders Dashboard',
+			menuPath: ['WorkOrders', 'Dashboard'],
+		},
+		{
+			pageName: 'Open Work Orders',
+			url: '#/workorders/list',
+			expectedText: 'Work Orders: Open WOs',
+			menuPath: ['WorkOrders', 'Open WOs'],
+		},
+		{
+			pageName: 'Vendor',
+			url: '#/workorders/list',
+			expectedText: 'Work Orders: Vendor',
+			menuPath: ['WorkOrders', 'Vendor'],
+		},
+		{
+			pageName: 'Board View',
+			url: '#/workorders/list',
+			expectedText: 'Work Orders: Board View',
+			menuPath: ['WorkOrders', 'Board View'],
+		},
+		{
+			pageName: 'Closed WOs',
+			url: '#/workorders/list',
+			expectedText: 'Work Orders: Closed WOs',
+			menuPath: ['WorkOrders', 'Closed WOs'],
+		},
+		{
+			pageName: 'All Work Orders',
+			url: '#/workorders/list',
+			expectedText: 'Work Orders: All Work Orders',
+			menuPath: ['WorkOrders', 'All Work Orders'],
+		},
+		{
+			pageName: 'Open',
+			url: '#/workorders/list',
+			expectedText: 'Work Orders: Open',
+			menuPath: ['WorkOrders', 'Open'],
+		},
+		{
+			pageName: 'Vendor Management',
+			url: '#/workorders/vendor_management',
+			expectedText: 'Vendor Management',
+			menuPath: ['WorkOrders', 'Vendor Management'],
+		},
+		{
+			pageName: 'Workorder Detail Report',
+			url: '#/workorders/reports/detail_report',
+			expectedText: 'Workorder Detail Report',
+			menuPath: ['WorkOrders', 'Reports', 'Work Orders Detail'],
+		},
+		{
+			pageName: 'Work Order Picture Report',
+			url: '#/workorders/reports/picture_report',
+			expectedText: 'Work Order Picture Report',
+			menuPath: ['WorkOrders', 'Reports', 'Work Orders Picture'],
+		},
+		{
+			pageName: 'Work Order Statistics Report',
+			url: '#/workorders/reports/statistics',
+			expectedText: 'Work Order Statistics Report',
+			menuPath: ['WorkOrders', 'Reports', 'Work Orders Statistics'],
+		},
+		{
+			pageName: 'Workflow Templates',
+			url: '#/workorders/more/workflow/templates/wo',
+			expectedText: 'Workflow Templates',
+			menuPath: ['WorkOrders', 'More', 'Workflow', 'Email, Voice, Text Templates'],
+		},
+		{
+			pageName: 'Workflow Rules',
+			url: '#/workorders/more/workflow/rules/wo',
+			expectedText: 'Workflow Rules',
+			menuPath: ['WorkOrders', 'More', 'Workflow', 'Rules'],
+		},
+		{
+			pageName: 'Workflow Triggers',
+			url: '#/workorders/more/workflow/triggers/wo',
+			expectedText: 'Workflow Triggers',
+			menuPath: ['WorkOrders', 'More', 'Workflow', 'Triggers'],
+		},
+		{
+			pageName: 'Categories',
+			url: '#/workorders/more/management_settings/categories',
+			expectedText: 'Categories',
+			menuPath: ['WorkOrders', 'More', 'Management Settings', 'Categories'],
+		},
+		{
+			pageName: 'Subcategories',
+			url: '#/workorders/more/management_settings/sub_categories',
+			expectedText: 'Subcategories',
+			menuPath: ['WorkOrders', 'More', 'Management Settings', 'Subcategories'],
+		},
+		{
+			pageName: 'Priorities',
+			url: '#/workorders/more/management_settings/enums/priorities',
+			expectedText: 'Priorities',
+			menuPath: ['WorkOrders', 'More', 'Management Settings', 'Priorities'],
+		},
+		{
+			pageName: 'Statuses',
+			url: '#/workorders/more/management_settings/enums/statuses',
+			expectedText: 'Statuses',
+			menuPath: ['WorkOrders', 'More', 'Management Settings', 'Statuses'],
+		},
+		{
+			pageName: 'Due Date',
+			url: '#/workorders/more/management_settings/due_date',
+			expectedText: 'Default Due Date',
+			menuPath: ['WorkOrders', 'More', 'Management Settings', 'Due Date'],
+		},
+		{
+			pageName: 'Reported By',
+			url: '#/workorders/more/management_settings/enums/reported_by',
+			expectedText: 'Reported By Options',
+			menuPath: ['WorkOrders', 'More', 'Management Settings', 'Reported By'],
+		},
+		{
+			pageName: 'Filtered Views',
+			url: '#/workorders/more/management_settings/filtered_views',
+			expectedText: 'Filtered Views',
+			menuPath: ['WorkOrders', 'More', 'Management Settings', 'Filtered Views'],
+		},
+		{
+			pageName: 'Amenity Types',
+			url: '#/workorders/more/management_settings/amenity_types',
+			expectedText: 'Amenity Types',
+			menuPath: ['WorkOrders', 'More', 'Management Settings', 'Amenity Type'],
+		},
+		{
+			pageName: 'Amenity Setup',
+			url: '#/workorders/more/association_settings/amenities',
+			expectedText: 'Amenities',
+			menuPath: ['WorkOrders', 'More', 'Association Settings', 'Amenity Setup'],
+		},
+	];
+
+	test('Check Workorders pages loaded', async ({ page, helpers, navigationHelper, commonPO }) => {
+		page.setDefaultTimeout(60000);
+		try {
+			await Promise.all([
+				page.goto('/'),
+				page.waitForResponse(resp => resp.url().includes('token') && resp.status() == 200),
+			]);
+			await navigationHelper.selectAssociationDropdown('HUTTO');
+
+			await helpers.softStepsForPages(availableWorkOrders, async (webPage) => {
+				await navigationHelper.leftMenuNavigation(...webPage.menuPath);
+
+				await commonPO.checkTextOnPageOrIframe(webPage.expectedText);
+				expect(page.url()).toContain(webPage.url);
+			});
+		} finally {
+			await page.context().close();
+		}
+	});
+
 });
