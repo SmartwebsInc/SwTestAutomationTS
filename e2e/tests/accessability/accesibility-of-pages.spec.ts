@@ -231,7 +231,7 @@ test.describe('Page Load', () => {
 		}
 	});
 
-	const availableWorkOrders: PageInfo[] = [
+	const availableWorkOrderPages: PageInfo[] = [
 		{
 			pageName: 'Dashboard',
 			url: '#/workorders/dashboard',
@@ -381,7 +381,7 @@ test.describe('Page Load', () => {
 			]);
 			await navigationHelper.selectAssociationDropdown('HUTTO');
 
-			await helpers.softStepsForPages(availableWorkOrders, async (webPage) => {
+			await helpers.softStepsForPages(availableWorkOrderPages, async (webPage) => {
 				await navigationHelper.leftMenuNavigation(...webPage.menuPath);
 
 				await commonPO.checkTextOnPageOrIframe(webPage.expectedText);
@@ -392,4 +392,119 @@ test.describe('Page Load', () => {
 		}
 	});
 
+	const availableArcPages: PageInfo[] = [
+		{
+			pageName: 'Arc Dashboard: Activity',
+			url: '#/arc/dashboard/activity',
+			expectedText: 'Arc Dashboard: Activity',
+			menuPath: ['Arc', 'Dashboard', 'Activity'],
+		},
+		{
+			pageName: 'Arc Dashboard: Config',
+			url: '#/arc/dashboard/configuration',
+			expectedText: 'Arc Dashboard: Config',
+			menuPath: ['Arc', 'Dashboard', 'Configurations'],
+		},
+		{
+			pageName: 'Projects: Staged',
+			url: '#/arc/projects/list/staged',
+			expectedText: 'Projects: Staged',
+			menuPath: ['Arc', 'Staged'],
+		},
+		{
+			pageName: 'Projects: Review',
+			url: '#/arc/projects/list/current',
+			expectedText: 'Projects: Review',
+			menuPath: ['Arc', 'Review'],
+		},
+		{
+			pageName: 'Projects: Pending Build Completion',
+			url: '#/arc/projects/list/pending',
+			expectedText: 'Projects: Pending Build Completion',
+			menuPath: ['Arc', 'Build'],
+		},
+		{
+			pageName: 'Projects: Completed',
+			url: '#/arc/projects/list/completed',
+			expectedText: 'Projects: Completed',
+			menuPath: ['Arc', 'Completed'],
+		},
+		{
+			pageName: 'Projects: Declined / Withdrawn',
+			url: '#/arc/projects/list/declined',
+			expectedText: 'Projects: Declined / Withdrawn',
+			menuPath: ['Arc', 'Declined / Withdrawn'],
+		},
+		{
+			pageName: 'Projects: Declined / Withdrawn',
+			url: '#/arc/projects/list/declined',
+			expectedText: 'Projects: Declined / Withdrawn',
+			menuPath: ['Arc', 'Declined / Withdrawn'],
+		},
+		{
+			pageName: 'Projects: Advanced Search',
+			url: '#/arc/projects/list/search',
+			expectedText: 'Projects: Advanced Search',
+			menuPath: ['Arc', 'Search'],
+		},
+		{
+			pageName: 'Community Arc Summary',
+			url: '#/arc/reports/summary',
+			expectedText: 'Association List:',
+			menuPath: ['Arc', 'Reports', 'Community Arc Summary'],
+		},
+		{
+			pageName: 'Community Arc Detail',
+			url: '#/arc/reports/detail',
+			expectedText: 'Association List:',
+			menuPath: ['Arc', 'Reports', 'Community Arc Detail'],
+		},
+		{
+			pageName: 'Uploaded Projects Report',
+			url: '#/arc/reports/uploaded',
+			expectedText: 'Report Type:',
+			menuPath: ['Arc', 'Reports', 'Uploaded Projects'],
+		},
+		{
+			pageName: 'Pending Projects Report',
+			url: '#/arc/reports/pending',
+			expectedText: 'Report Type:',
+			menuPath: ['Arc', 'Reports', 'Pending Projects'],
+		},
+		{
+			pageName: 'Completed Projects Report',
+			url: '#/arc/reports/completed',
+			expectedText: 'Report Type:',
+			menuPath: ['Arc', 'Reports', 'Completed Projects'],
+		},
+		{
+			pageName: 'Modification Report',
+			url: '#/arc/reports/modification',
+			expectedText: 'Architectural Modification Report',
+			menuPath: ['Arc', 'Reports', 'Modification Report'],
+		},
+	];
+
+	test('Check Arc pages loaded', async ({ page, helpers, navigationHelper, commonPO }) => {
+		page.setDefaultTimeout(60000);
+		try {
+			await Promise.all([
+				page.goto('/'),
+				page.waitForResponse(resp => resp.url().includes('token') && resp.status() == 200),
+			]);
+			await navigationHelper.selectAssociationDropdown('HUTTO');
+
+			await helpers.softStepsForPages(availableArcPages, async (webPage) => {
+				await navigationHelper.leftMenuNavigation(...webPage.menuPath);
+
+				if (webPage.pageName === 'Arc Dashboard: Config') {
+					await expect(page.locator('h1')).toBeVisible();
+				}
+				await commonPO.checkTextOnPageOrIframe(webPage.expectedText);
+				expect(page.url()).toContain(webPage.url);
+			});
+		} finally {
+			await page.context().close();
+		}
+	});
 });

@@ -88,6 +88,7 @@ export class NavigationHelper {
 				const text = await item.textContent();
 				if (text?.trim() === menuItems[i]) {
 					await expect(item).toBeVisible();
+					await expect(item).not.toHaveClass('disabled-module');
 					await item.click();
 					await this._page.waitForTimeout(300);
 					matched = true;
