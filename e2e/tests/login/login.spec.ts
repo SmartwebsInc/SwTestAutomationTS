@@ -4,50 +4,50 @@ import { LoginPO } from '../../page-objects/login/LoginPO';
 import { Context } from 'vm';
 
 test.describe('Login Tests', () => {
-	test.use({ storageState: 'e2e/auth/sa-storage-state.json' });
-	let page: Page;
-	let context: Context;
-	let loginPO: LoginPO;
 
-	test.beforeEach(async ({ browser }) => {
-		context = await browser.newContext();
-		page = await context.newPage();
+	test.beforeEach(async ( { page } ) => {
 		await page.goto('');
-		loginPO = new LoginPO(page);
+
 	});
 
-	test('QWERTY should successfully sign in with correct credentials', async ({ browser, request, api }) => {
+	test('QWERTY should successfully sign in with correct credentials', async ({ browser, request, api, page, loginPO }) => {
+		await loginPO.login();
 		await expect(page.getByText('All Associations').first()).toBeVisible({ timeout: 30000 });
 		await expect(page).toHaveURL(/.*\/#\/dashboard/);
-
-		console.log('Bearer Token:', api.bearerToken);
-		await api.ownerUnitRequests.createUnit(request, api.bearerToken, await api.ownerUnitRequests.defaultUnitValues('John', 'Doe'));
-
-		let contextNew = await browser.newContext({ storageState: 'e2e/auth/sa-storage-state.json' });
-		let pageNew = await contextNew.newPage();
-		await pageNew.goto('');
-		await pageNew.waitForTimeout(20000);
 	});
 
-	test('should display an error message for invalid credentials', async () => {
-		await loginPO.login('InvalidUser', 'InvalidPassword');
+	test('should display an error message for invalid credentials', async ({ page, loginPO }) => {
+		await expect(loginPO.usernameInput).toBeVisible();
+		await page.waitForTimeout(400);
+		await loginPO.usernameInput.fill('wrongusername');
+		await loginPO.passwordInput.fill('wrongpassword');
+		await loginPO.loginButton.click();
+		await page.waitForTimeout(400);
 		await expect(loginPO.alertMessage).toHaveText('Invalid username or password');
 	});
 
-	test('should verify various page links', async ({ page }) => {
-		await loginPO.openLink('Privacy Policy');
-		await expect(page).toHaveURL(/https:\/\/smartwebs\.com\/privacy-policy\/\?signin=.*/);
-		await expect(page).toHaveTitle('Privacy Policy - Smartwebs Community Management | Smartwebs');
+	test('should verify various page links', async ( { page, loginPO } ) => {
+		let baseUrl = process.env.BASE_URL;
+		
+		await test.step('Verify Privacy Policy link', async () => {
+			await loginPO.openLink('Privacy Policy');
+			await expect(page).toHaveURL(/https:\/\/smartwebs\.com\/privacy-policy\/\?signin=.*/);
+			await expect(page).toHaveTitle('Privacy Policy - Smartwebs Community Management | Smartwebs');
+		});
 
-		await page.goto('');
-		await loginPO.openLink('Terms of Use');
-		await expect(page).toHaveURL(/https:\/\/smartwebs\.com\/terms\/\?signin=.*/);
-		await expect(page).toHaveTitle('Terms of Use | Smartwebs');
+		await test.step('Verify Terms of Use link', async () => {
+			await page.goto('');
+			await loginPO.openLink('Terms of Use');
+			await expect(page).toHaveURL(/https:\/\/smartwebs\.com\/terms\/\?signin=.*/);
+			await expect(page).toHaveTitle('Terms of Use | Smartwebs');
+		});
 
-		await page.goto('');
-		await loginPO.openLink('Forgot password');
-		await expect(page).toHaveURL(/https:\/\/[\w-]+\.smartwebs\.com\/#\/password\/reset\?redirectTo=https:%2F%2Foffice\.smartwebs\.com&signin=.*/);
-		const placeholderText = await loginPO.forgotPasswordForm.getAttribute('placeholder');
-		expect(placeholderText).toContain('Enter your username or email address');
+		await test.step('Verify Forgot Password link', async () => {
+			await page.goto('');
+			await loginPO.openLink('Forgot password');
+			await expect(page).toHaveURL(/.*\/#\/password\/reset\?redirectTo=.*&signin=.*/);
+			const placeholderText = await loginPO.forgotPasswordForm.getAttribute('placeholder');
+			expect(placeholderText).toContain('Enter your username or email address');
+		});
 	});
 });

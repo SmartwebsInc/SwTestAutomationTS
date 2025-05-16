@@ -12,33 +12,27 @@ const config: PlaywrightTestConfig = {
 	},
 	forbidOnly: !!process.env.CI,
 	retries: process.env.CI ? 1 : 0,
-	workers: process.env.CI ? 3 : 4,
-	reporter: process.env.CI ? [
-		['list', { outputFolder: 'reports/list/' }],
-		// ['playwright-qase-reporter',
-		// 	{
-		// 		debug: false,
-		// 		testops: {
-		// 			mode: 'testops',
-		// 			api: {
-		// 				token: process.env.QASE_API_TOKEN,
-		// 			},
-		// 			project: process.env.QASE_PROJECT_CODE,
-		// 			basePath: process.env.QASE_API_BASE_URL,
-		// 			uploadAttachments: true,
-		// 			run: {
-		// 				complete: true,
-		// 				id: process.env.QASE_RUN_ID,
-		// 			},
-		// 		},
-		// 	},
-		// ],
-		['html', { outputFolder: 'reports/html/' }],
-		['blob', { outputDir: 'all-blob-reports' }],
-		['./testcase-updates-reporter.ts'],
-	]: [
+	workers: process.env.CI ? 3 : 3,
+	reporter: [
 		['list', { outputFolder: 'reports/list/' }],
 		['html', { outputFolder: 'reports/html/' }],
+		['blob', { outputDir: 'reports/all-blob-reports' }],
+		['playwright-qase-reporter', {
+			debug: false,
+			testops: {
+				mode: 'testops',
+				api: {
+					token: process.env.QASE_API_TOKEN || '',
+				},
+				project: process.env.QASE_PROJECT_CODE || '',
+				basePath: process.env.QASE_API_BASE_URL || '',
+				uploadAttachments: true,
+				run: {
+					complete: true,
+					id: process.env.QASE_RUN_ID,
+				},
+			},
+		}],
 	],
 	globalSetup: require.resolve('./global-setup'),
 	globalTeardown: require.resolve('./global-teardown'),
