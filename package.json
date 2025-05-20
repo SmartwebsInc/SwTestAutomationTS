@@ -9,7 +9,12 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "postinstall": "playwright install chromium",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "allure:clear": "rimraf .\\reports\\allure-results\\ && rimraf .\\allure-report\\ && rimraf .\\allure-results\\",
+    "allure:generate": "allure generate ./allure-results -o allure-report --clean",
+    "allure:open": "allure open allure-report",
+    "allure:serve": "allure serve ./allure-results",
+    "test:allure": "npm run allure:clear && playwright test && npm run allure:generate && npm run allure:open"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +25,7 @@
     "@types/node": "^22.15.3",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
+    "allure-playwright": "^3.2.2",
     "cross-env": "^7.0.3",
     "dotenv": "^16.5.0",
     "eslint": "^8.57.0",
@@ -28,6 +34,7 @@
     "playwright": "^1.52.0",
     "playwright-qase-reporter": "^2.1.0",
     "playwright-tesults-reporter": "^1.1.0",
+    "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.2"
   },

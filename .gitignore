@@ -24,3 +24,7 @@ e2e/auth/
 # System Files
 .DS_Store
 Thumbs.db
+
+# Reports
+/allure-results
+/allure-report

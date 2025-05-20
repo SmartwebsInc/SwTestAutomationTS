@@ -17,6 +17,11 @@ const config: PlaywrightTestConfig = {
 		['list', { outputFolder: 'reports/list/' }],
 		['html', { outputFolder: 'reports/html/' }],
 		['blob', { outputDir: 'reports/all-blob-reports' }],
+		['allure-playwright', {
+			outputFolder: './reports/allure-results/',
+			detail: true,
+			suiteTitle: false,
+		}],
 		['playwright-qase-reporter', {
 			debug: false,
 			testops: {
