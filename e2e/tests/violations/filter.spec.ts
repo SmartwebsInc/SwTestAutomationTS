@@ -32,7 +32,7 @@ test.describe('Filter Violations Tests', () => {
 		await moreOptionsPanel.inCurrentStageCheckboxController(1, 4, 5, 6);
 
 		await moreOptionsPanel.applyBtn.click();
-        
+
 		// Verify filter is applied by checking for filtered results
 		await expect(page.locator('.violations-list')).toBeVisible();
 		await expect(page.locator('text=Test Address')).toBeVisible();
@@ -52,7 +52,7 @@ test.describe('Filter Violations Tests', () => {
 
 		// Reset filters
 		await moreOptionsPanel.resetButton.click();
-        
+
 		// Verify all checkboxes are checked after reset
 		for (let i = 0; i <= 5; i++) {
 			await expect(moreOptionsPanel.inCurrentStageCheckbox.nth(i)).toBeChecked();

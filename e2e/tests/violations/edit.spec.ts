@@ -27,7 +27,7 @@ test.describe('Edit Violations Tests', () => {
 
 		await addViolationPO.ownerName.fill('Margot');
 		await violationsPO.tableHelper.clickRowContainingText('Margot');
-        
+
 		await expect(addViolationPO.categoryOption.first()).toBeVisible();
 		await expect(addViolationPO.subcategoryOption.first()).toBeVisible();
 	});

@@ -26,37 +26,37 @@ import { DashboardReportPO } from '../page-objects/violations/DashboardReportPO'
 
 // Extend basic test fixtures
 export type BaseFixtures = {
-    attachVideos: void;
-    context: BrowserContext;
-    api: API;
-    navigationHelper: NavigationHelper;
-    tableHelper: TableHelper;
-    helpers: helpers;
-    commonPO: CommonPO;
-    loginPO: LoginPO;
-    logOutPO: LogOutPO;
-    dashboardPO: DashboardPO;
-    profilePO: ProfilePO;
-    preferencesPO: PreferencesPO;
-    searchPO: SearchPO;
-    userManagementPO: UserManagementPO;
-    userFormPO: UserFormPO;
-    violationsPO: ViolationsPO;
-    addViolationPO: AddViolationPO;
-    assessmentsPO: AssessmentsPO;
-    listViolationsPO: ListViolationsPO;
-    moreOptionsPanelPO: MoreOptionsPanelPO;
-    morePO: MorePO;
-    printPO: PrintPO;
-    queuedPO: QueuedPO;
-    violationReportsPO: ViolationReportsPO;
-    dashboardReportPO: DashboardReportPO;
+	attachVideos: void;
+	context: BrowserContext;
+	api: API;
+	navigationHelper: NavigationHelper;
+	tableHelper: TableHelper;
+	helpers: helpers;
+	commonPO: CommonPO;
+	loginPO: LoginPO;
+	logOutPO: LogOutPO;
+	dashboardPO: DashboardPO;
+	profilePO: ProfilePO;
+	preferencesPO: PreferencesPO;
+	searchPO: SearchPO;
+	userManagementPO: UserManagementPO;
+	userFormPO: UserFormPO;
+	violationsPO: ViolationsPO;
+	addViolationPO: AddViolationPO;
+	assessmentsPO: AssessmentsPO;
+	listViolationsPO: ListViolationsPO;
+	moreOptionsPanelPO: MoreOptionsPanelPO;
+	morePO: MorePO;
+	printPO: PrintPO;
+	queuedPO: QueuedPO;
+	violationReportsPO: ViolationReportsPO;
+	dashboardReportPO: DashboardReportPO;
 };
 
 export const baseTest = base.extend<BaseFixtures>({
-	attachVideos: async ({ }, use, testInfo: TestInfo) => {
+	attachVideos: async ({}, use, testInfo: TestInfo) => {
 		await use();
-        
+
 		if (testInfo.status === 'failed') {
 			const videoDir = path.join(testInfo.outputPath(), 'videos');
 			await testInfo.attach('video', {
@@ -73,7 +73,7 @@ export const baseTest = base.extend<BaseFixtures>({
 		await use(context);
 		await context.close();
 	},
-	api: async ({ }, use) => {
+	api: async ({}, use) => {
 		await use(new API());
 	},
 	navigationHelper: async ({ page }, use) => {
@@ -82,7 +82,7 @@ export const baseTest = base.extend<BaseFixtures>({
 	tableHelper: async ({ page }, use) => {
 		await use(new TableHelper(page));
 	},
-	helpers: async ({ }, use) => {
+	helpers: async ({}, use) => {
 		await use(new helpers());
 	},
 	commonPO: async ({ page }, use) => {
@@ -145,11 +145,7 @@ export const baseTest = base.extend<BaseFixtures>({
 });
 
 // Helper functions for creating custom contexts and pages
-export async function createCustomContext(
-	browser: Browser,
-	testInfo: TestInfo,
-	options: any = {},
-): Promise<BrowserContext> {
+export async function createCustomContext(browser: Browser, testInfo: TestInfo, options: any = {}): Promise<BrowserContext> {
 	const videoDir = path.join(testInfo.outputPath(), 'videos');
 	const context = await browser.newContext({
 		...options,
@@ -158,11 +154,7 @@ export async function createCustomContext(
 	return context;
 }
 
-export async function createCustomPage(
-	browser: Browser,
-	testInfo: TestInfo,
-	options: any = {},
-): Promise<Page> {
+export async function createCustomPage(browser: Browser, testInfo: TestInfo, options: any = {}): Promise<Page> {
 	const context = await createCustomContext(browser, testInfo, options);
 	return await context.newPage();
 }

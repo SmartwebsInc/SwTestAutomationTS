@@ -51,9 +51,7 @@ export class UserManagementPO {
 
 	async searchUser(value: string) {
 		await this.searchFilter.fill(value);
-		await this.page.waitForResponse(
-			response => response.url().includes('GetUserListByFilter') && response.status() === 200,
-		);
+		await this.page.waitForResponse((response) => response.url().includes('GetUserListByFilter') && response.status() === 200);
 		await this.searchButton.click();
 	}
 }

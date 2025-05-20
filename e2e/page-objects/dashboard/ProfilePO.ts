@@ -38,9 +38,7 @@ export class ProfilePO {
 		await this.editAssotiationButton.click();
 		await this.userRoleDropdown.selectOption(role);
 		await this.common.saveButton.click();
-		await this.page.waitForResponse(response =>
-			response.url().includes('/GetUnitsByUser') && response.status() === 200,
-		);
+		await this.page.waitForResponse((response) => response.url().includes('/GetUnitsByUser') && response.status() === 200);
 	}
 
 	async verifyUserRole(expectedRole: string) {

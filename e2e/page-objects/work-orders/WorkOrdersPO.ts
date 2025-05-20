@@ -17,7 +17,8 @@ export class WorkOrdersPO {
 	readonly addWorkOrderPO: AddWorkOrderPO;
 	readonly openWorkOrdersPO: OpenWorkOrdersPO;
 	readonly vendorWorkOrdersPO: VendorWorkOrdersPO;
-	readonly closedWorkOrdersPO: ClosedWorkOrdersPO;  readonly allWorkOrdersPO: AllWorkOrdersPO;
+	readonly closedWorkOrdersPO: ClosedWorkOrdersPO;
+	readonly allWorkOrdersPO: AllWorkOrdersPO;
 	readonly vendorManagementPO: VendorManagementPO;
 	readonly reportsPO: ReportsPO;
 	readonly moreWorkOrdersPO: MoreWorkOrdersPO;

@@ -16,7 +16,8 @@ export class ViolationRequests {
 			includePdfInLetter: true,
 			sendViolation: true,
 			reasonText: '',
-			letterText: '<p><span style="background-color: rgb(74, 134, 232);"><strong>management_company_logo: <img src="https://office.demo.smartwebs.com/ArcCommonResources/ClientUploadedAppResources/DefaultLogoSignatureImages/SW-No-WhiteSpace-Logo_250x68.png" /></strong></span></p>',
+			letterText:
+				'<p><span style="background-color: rgb(74, 134, 232);"><strong>management_company_logo: <img src="https://office.demo.smartwebs.com/ArcCommonResources/ClientUploadedAppResources/DefaultLogoSignatureImages/SW-No-WhiteSpace-Logo_250x68.png" /></strong></span></p>',
 			fine: 6,
 			cure: 26,
 			notes: null,
@@ -24,17 +25,14 @@ export class ViolationRequests {
 	}
 
 	async createViolation(request: APIRequestContext, bearerToken: string, violationData: ViolationData) {
-		const createViolationResponse = await request.post(
-			'SWWebService/Services/Simple/ViolationService.svc/SaveNewViolationEnc',
-			{
-				data: violationData,
-				headers: {
-					'Authorization': `Bearer ${bearerToken}`,
-					'Content-Type': 'application/json;charset=UTF-8',
-					'Accept': 'application/json',
-				},
+		const createViolationResponse = await request.post('SWWebService/Services/Simple/ViolationService.svc/SaveNewViolationEnc', {
+			data: violationData,
+			headers: {
+				Authorization: `Bearer ${bearerToken}`,
+				'Content-Type': 'application/json;charset=UTF-8',
+				Accept: 'application/json',
 			},
-		);
+		});
 
 		if (createViolationResponse.status() !== 200) {
 			const responseText = await createViolationResponse.text();

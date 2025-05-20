@@ -55,21 +55,11 @@ test.describe('Association Users Tests', () => {
 	});
 
 	test('should change list size and show inactive users', async ({ page }) => {
-		await Promise.all([
-			page.waitForResponse(response =>
-				response.url().includes('GetUserListByFilter') && response.status() === 200,
-			),
-			userManagementPage.selectListSize('10'),
-		]);
+		await Promise.all([page.waitForResponse((response) => response.url().includes('GetUserListByFilter') && response.status() === 200), userManagementPage.selectListSize('10')]);
 		await page.waitForTimeout(100);
 		expect(await userManagementPage.tableHelper.getTableRowCount()).toBe(10);
 
-		await Promise.all([
-			page.waitForResponse(response =>
-				response.url().includes('GetUserListByFilter') && response.status() === 200,
-			),
-			userManagementPage.selectListSize('25'),
-		]);
+		await Promise.all([page.waitForResponse((response) => response.url().includes('GetUserListByFilter') && response.status() === 200), userManagementPage.selectListSize('25')]);
 		await page.waitForTimeout(100);
 		expect(await userManagementPage.tableHelper.getTableRowCount()).toBe(25);
 	});
@@ -117,7 +107,7 @@ test.describe('Association Users Tests', () => {
 		await userManagementPage.onlyAssociationUsersCheckbox.uncheck();
 		await userManagementPage.selectGridFilterOption('Last Name');
 		await userManagementPage.searchUser('Automation Test');
-        
+
 		await userManagementPage.tableHelper.rowTable.first().click();
 
 		await userForm.firstNameInput.fill('First Test');
@@ -151,12 +141,7 @@ test.describe('Association Users Tests', () => {
 
 		await userForm.titleInput.fill('Test Test');
 
-		await Promise.all([
-			page.waitForResponse(response =>
-				response.url().includes('SaveUser') && response.status() === 200,
-			),
-			userForm.saveButton.click(),
-		]);
+		await Promise.all([page.waitForResponse((response) => response.url().includes('SaveUser') && response.status() === 200), userForm.saveButton.click()]);
 		await page.reload();
 
 		await userManagementPage.selectGridFilterOption('Last Name');

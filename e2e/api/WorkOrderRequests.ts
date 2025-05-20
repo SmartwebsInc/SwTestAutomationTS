@@ -36,20 +36,17 @@ export class WorkOrderRequests {
 	}
 
 	async createWorkOrder(request: APIRequestContext, bearerToken: string, workOrderData: WorkOrderRequest, mgtIdEncrypted: string) {
-		const response = await request.post(
-			'SWWebservice/Services/WorkOrdersArea/WorkOrdersAreaService.svc/SaveWorkOrder',
-			{
-				params: {
-					mgtIdEncrypted,
-				},
-				data: workOrderData,
-				headers: {
-					'Authorization': `Bearer ${bearerToken}`,
-					'Content-Type': 'application/json;charset=UTF-8',
-					'Accept': 'application/json',
-				},
+		const response = await request.post('SWWebservice/Services/WorkOrdersArea/WorkOrdersAreaService.svc/SaveWorkOrder', {
+			params: {
+				mgtIdEncrypted,
 			},
-		);
+			data: workOrderData,
+			headers: {
+				Authorization: `Bearer ${bearerToken}`,
+				'Content-Type': 'application/json;charset=UTF-8',
+				Accept: 'application/json',
+			},
+		});
 
 		if (response.status() !== 200) {
 			const responseText = await response.text();

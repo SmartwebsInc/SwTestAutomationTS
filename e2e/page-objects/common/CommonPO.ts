@@ -40,7 +40,7 @@ export class CommonPO {
 		this.separateButton = page.getByRole('button', { name: 'Separate' });
 		this.openButton = page.getByRole('button', { name: 'Open' });
 		this.closedButton = page.getByRole('button', { name: 'Close' });
-        
+
 		this.modal = page.locator('.modal-body');
 		this.openButtonModal = this.modal.getByRole('button', { name: 'Open' });
 		this.closeButtonModal = this.modal.getByRole('button', { name: 'Close' });
@@ -62,25 +62,34 @@ export class CommonPO {
 		} else if (await fallbackText.isVisible()) {
 			await expect(fallbackText).toBeVisible();
 		}
-	
+
 		// If not found, check all iframes
 		const frames = this._page.frames();
 		for (const frame of frames) {
 			const frameLocator = frame.locator('h1', { hasText: text });
-			if (await frameLocator.first().isVisible().catch(() => false)) {
+			if (
+				await frameLocator
+					.first()
+					.isVisible()
+					.catch(() => false)
+			) {
 				await expect(frameLocator.first()).toContainText(text);
 				return;
 			}
-	
+
 			const frameText = frame.getByText(text, { exact: true });
-			if (await frameText.first().isVisible().catch(() => false)) {
+			if (
+				await frameText
+					.first()
+					.isVisible()
+					.catch(() => false)
+			) {
 				await expect(frameText.first()).toBeVisible();
 				return;
 			}
 		}
-	
+
 		// If nothing found
 		throw new Error(`Expected text "${text}" not found on page or iframes.`);
 	}
-	
 }

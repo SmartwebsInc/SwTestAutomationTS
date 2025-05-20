@@ -16,7 +16,7 @@ export class LoginPO {
 		this.page = page;
 		this.defaultUsername = process.env.ACC_SUPER_ADMIN_USERNAME || '';
 		this.defaultPassword = process.env.SUPER_ADMIN_PASSWORD || '';
-        
+
 		this.usernameInput = page.locator('input[id=username]');
 		this.passwordInput = page.locator('input[id=password]');
 		this.loginButton = page.locator('button[type=submit]');
@@ -30,10 +30,7 @@ export class LoginPO {
 		await this.page.waitForTimeout(400);
 		await this.usernameInput.fill(username ?? this.defaultUsername);
 		await this.passwordInput.fill(password ?? this.defaultPassword);
-		await Promise.all([
-			this.loginButton.click(),
-			this.page.waitForResponse(resp => resp.url().includes('/token') && resp.status() === 200),
-		]);
+		await Promise.all([this.loginButton.click(), this.page.waitForResponse((resp) => resp.url().includes('/token') && resp.status() === 200)]);
 	}
 
 	async openLink(linkText: string) {

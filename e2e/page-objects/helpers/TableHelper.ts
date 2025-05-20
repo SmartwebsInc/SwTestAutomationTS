@@ -75,14 +75,15 @@ export class TableHelper {
 		let allColumns = await this.getColumnHeaders();
 
 		if (formatHeader) {
-			allColumns = allColumns.map(col =>
-				col.split(' ')
-					.map(word => word.charAt(0).toUpperCase() + word.substring(1).toLowerCase())
+			allColumns = allColumns.map((col) =>
+				col
+					.split(' ')
+					.map((word) => word.charAt(0).toUpperCase() + word.substring(1).toLowerCase())
 					.join(' '),
 			);
 		}
 
-		const columnIndex = allColumns.findIndex(col => col === headerName);
+		const columnIndex = allColumns.findIndex((col) => col === headerName);
 		return await this.getColumnContent(columnIndex, notEmptyColumnMaxRowsCount);
 	}
 

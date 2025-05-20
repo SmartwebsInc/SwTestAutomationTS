@@ -1,9 +1,9 @@
 import { test, expect } from '../../fixtures/BasePages';
 
 interface PageInfo {
-    pageName: string;
-    url: string;
-    expectedText: string;
+	pageName: string;
+	url: string;
+	expectedText: string;
 	menuPath: string[];
 }
 
@@ -176,10 +176,7 @@ test.describe('Page Load', () => {
 	];
 	test('Check Violation pages loaded', async ({ page, helpers, navigationHelper, morePO, commonPO }) => {
 		try {
-			await Promise.all([
-				page.goto('/'),
-				page.waitForResponse(resp => resp.url().includes('token') && resp.status() == 200),
-			]);
+			await Promise.all([page.goto('/'), page.waitForResponse((resp) => resp.url().includes('token') && resp.status() == 200)]);
 			await navigationHelper.selectAssociationDropdown('HUTTO');
 
 			await helpers.softStepsForPages(availablePagesViolations, async (webPage) => {
@@ -195,9 +192,7 @@ test.describe('Page Load', () => {
 						break;
 
 					case 'Multi-Violation policy': {
-						const innerFrame = await legacyFrame
-							.locator('#UltraWebTab1__ctl7_PolicyList_UltraWebTab1__ctl3_frmMultiViolLtrs')
-							.contentFrame();
+						const innerFrame = await legacyFrame.locator('#UltraWebTab1__ctl7_PolicyList_UltraWebTab1__ctl3_frmMultiViolLtrs').contentFrame();
 
 						await expect(innerFrame.locator('#SpnMultViolLtrSaveNew')).toBeVisible();
 						break;
@@ -208,7 +203,7 @@ test.describe('Page Load', () => {
 						break;
 
 					default:
-					// No validation needed
+						// No validation needed
 						break;
 				}
 
@@ -375,10 +370,7 @@ test.describe('Page Load', () => {
 	test('Check Workorders pages loaded', async ({ page, helpers, navigationHelper, commonPO }) => {
 		page.setDefaultTimeout(60000);
 		try {
-			await Promise.all([
-				page.goto('/'),
-				page.waitForResponse(resp => resp.url().includes('token') && resp.status() == 200),
-			]);
+			await Promise.all([page.goto('/'), page.waitForResponse((resp) => resp.url().includes('token') && resp.status() == 200)]);
 			await navigationHelper.selectAssociationDropdown('HUTTO');
 
 			await helpers.softStepsForPages(availableWorkOrderPages, async (webPage) => {
@@ -488,10 +480,7 @@ test.describe('Page Load', () => {
 	test('Check Arc pages loaded', async ({ page, helpers, navigationHelper, commonPO }) => {
 		page.setDefaultTimeout(60000);
 		try {
-			await Promise.all([
-				page.goto('/'),
-				page.waitForResponse(resp => resp.url().includes('token') && resp.status() == 200),
-			]);
+			await Promise.all([page.goto('/'), page.waitForResponse((resp) => resp.url().includes('token') && resp.status() == 200)]);
 			await navigationHelper.selectAssociationDropdown('HUTTO');
 
 			await helpers.softStepsForPages(availableArcPages, async (webPage) => {

@@ -24,24 +24,14 @@ test.describe('Violations Add and Delete Tests', () => {
 		await violationsPO.addViolationPO.ownerName.fill('Cypress');
 		await violationsPO.tableHelper.clickRowContainingText('Cypress');
 		await violationsPO.addViolationPO.setCategorySubcategory('Cypress', 'Automation Test');
-		await Promise.all([
-			page.waitForResponse(response =>
-				response.url().includes('CreateViolation') && response.status() === 200,
-			),
-			violationsPO.addViolationPO.sendButton.click(),
-		]);
+		await Promise.all([page.waitForResponse((response) => response.url().includes('CreateViolation') && response.status() === 200), violationsPO.addViolationPO.sendButton.click()]);
 
 		// Search Violation and Delete
 		await violationsPO.searchViolation('Owner Name (First or Last)', 'Cypress');
 		await violationsPO.listViolationsPO.openViolationWithTextInTable('Cypress');
 		await violationsPO.listViolationsPO.closeButton.click();
 
-		await Promise.all([
-			page.waitForResponse(response =>
-				response.url().includes('CloseViolation') && response.status() === 200,
-			),
-			violationsPO.common.yesButton.click(),
-		]);
+		await Promise.all([page.waitForResponse((response) => response.url().includes('CloseViolation') && response.status() === 200), violationsPO.common.yesButton.click()]);
 
 		// Check if Violation is deleted
 		await expect(violationsPO.listViolationsPO.closeButton).not.toBeVisible();
@@ -54,24 +44,14 @@ test.describe('Violations Add and Delete Tests', () => {
 		await violationsPO.tableHelper.clickRowContainingText('Cypress');
 		await violationsPO.addViolationPO.setCategorySubcategory('Cypress', 'Automation Test');
 		await violationsPO.addViolationPO.stageDropdown.selectOption('2 (2nd Fine Notice GOOD)');
-		await Promise.all([
-			page.waitForResponse(response =>
-				response.url().includes('CreateViolation') && response.status() === 200,
-			),
-			violationsPO.addViolationPO.sendButton.click(),
-		]);
+		await Promise.all([page.waitForResponse((response) => response.url().includes('CreateViolation') && response.status() === 200), violationsPO.addViolationPO.sendButton.click()]);
 
 		// Search Violation and Delete
 		await violationsPO.searchViolation('Owner Name (First or Last)', 'Cypress');
 		await violationsPO.listViolationsPO.openViolationWithTextInTable('Cypress');
 		await violationsPO.listViolationsPO.closeButton.click();
 
-		await Promise.all([
-			page.waitForResponse(response =>
-				response.url().includes('CloseViolation') && response.status() === 200,
-			),
-			violationsPO.common.yesButton.click(),
-		]);
+		await Promise.all([page.waitForResponse((response) => response.url().includes('CloseViolation') && response.status() === 200), violationsPO.common.yesButton.click()]);
 
 		// Check if Violation is deleted
 		await expect(violationsPO.listViolationsPO.closeButton).not.toBeVisible();
@@ -84,21 +64,11 @@ test.describe('Violations Add and Delete Tests', () => {
 		await violationsPO.tableHelper.clickRowContainingText('Cypress');
 
 		await violationsPO.addViolationPO.setCategorySubcategory('Architectural', 'Arbor');
-		await Promise.all([
-			page.waitForResponse(response =>
-				response.url().includes('SaveNewViolation') && response.status() === 200,
-			),
-			violationsPO.addViolationPO.sendButton.click(),
-		]);
+		await Promise.all([page.waitForResponse((response) => response.url().includes('SaveNewViolation') && response.status() === 200), violationsPO.addViolationPO.sendButton.click()]);
 
 		await violationsPO.addViolationPO.newButton.click();
 		await violationsPO.addViolationPO.setCategorySubcategory('Architectural', 'Gazebo');
-		await Promise.all([
-			page.waitForResponse(response =>
-				response.url().includes('SaveNewViolation') && response.status() === 200,
-			),
-			violationsPO.addViolationPO.sendButton.click(),
-		]);
+		await Promise.all([page.waitForResponse((response) => response.url().includes('SaveNewViolation') && response.status() === 200), violationsPO.addViolationPO.sendButton.click()]);
 
 		// TODO: Add assertions to verify the violations were created successfully
 		// For example:

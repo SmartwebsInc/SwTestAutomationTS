@@ -33,7 +33,7 @@ test.describe('Print Tests', () => {
 		await violationsPO.moreOptionsPanelPO.certifiedMailingMethodCheckbox.uncheck();
 		await violationsPO.moreOptionsPanelPO.showResultsThatMatch.selectOption('All (inclusive)');
 		await violationsPO.moreOptionsPanelPO.applyBtn.click();
-        
+
 		// await violationsPO.searchViolation('rock');
 
 		await expect(printPage.cardViolation.first()).toBeVisible();

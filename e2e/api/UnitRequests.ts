@@ -3,7 +3,7 @@ import { OwnerUnitData } from './APItypes';
 
 export class UnitRequests {
 	async defaultUnitValues(ownerFirstName: string, ownerLastName: string): Promise<OwnerUnitData> {
-		return ({
+		return {
 			owner: {
 				MailingAddress: '693 Terry St SE',
 				MailingAddress2: '',
@@ -45,28 +45,25 @@ export class UnitRequests {
 				UserIdEncrypted: 'AXdji-T5ZLUvvkshUESudg',
 			},
 			closingDate: null,
-		});
+		};
 	}
-    
+
 	async createUnit(request: APIRequestContext, bearerToken: string, ownerUnitData: OwnerUnitData) {
-		const createOwnerResponse = await request.post(
-			'SWWebservice/Services/UnitsArea/UnitsAreaService.svc/SaveOwnerUnitEx',
-			{
-				data: ownerUnitData,
-				headers: {
-					'Authorization': `Bearer ${bearerToken}`,
-					'Content-Type': 'application/json;charset=UTF-8',
-					'Accept': 'application/json',
-				},
+		const createOwnerResponse = await request.post('SWWebservice/Services/UnitsArea/UnitsAreaService.svc/SaveOwnerUnitEx', {
+			data: ownerUnitData,
+			headers: {
+				Authorization: `Bearer ${bearerToken}`,
+				'Content-Type': 'application/json;charset=UTF-8',
+				Accept: 'application/json',
 			},
-		);
-        
+		});
+
 		if (createOwnerResponse.status() !== 200) {
 			const responseText = await createOwnerResponse.text();
 			console.log('Error response:', responseText);
 			throw new Error(`API request failed with status ${createOwnerResponse.status()}: ${responseText}`);
 		}
-        
+
 		const responseText = await createOwnerResponse.text();
 		try {
 			const responseJson = JSON.parse(responseText);

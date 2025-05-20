@@ -17,27 +17,33 @@ const config: PlaywrightTestConfig = {
 		['list', { outputFolder: 'reports/list/' }],
 		['html', { outputFolder: 'reports/html/' }],
 		['blob', { outputDir: 'reports/all-blob-reports' }],
-		['allure-playwright', {
-			outputFolder: './reports/allure-results/',
-			detail: true,
-			suiteTitle: false,
-		}],
-		['playwright-qase-reporter', {
-			debug: false,
-			testops: {
-				mode: 'testops',
-				api: {
-					token: process.env.QASE_API_TOKEN || '',
-				},
-				project: process.env.QASE_PROJECT_CODE || '',
-				basePath: process.env.QASE_API_BASE_URL || '',
-				uploadAttachments: true,
-				run: {
-					complete: true,
-					id: process.env.QASE_RUN_ID,
+		[
+			'allure-playwright',
+			{
+				outputFolder: './reports/allure-results/',
+				detail: true,
+				suiteTitle: false,
+			},
+		],
+		[
+			'playwright-qase-reporter',
+			{
+				debug: false,
+				testops: {
+					mode: 'testops',
+					api: {
+						token: process.env.QASE_API_TOKEN || '',
+					},
+					project: process.env.QASE_PROJECT_CODE || '',
+					basePath: process.env.QASE_API_BASE_URL || '',
+					uploadAttachments: true,
+					run: {
+						complete: true,
+						id: process.env.QASE_RUN_ID,
+					},
 				},
 			},
-		}],
+		],
 	],
 	globalSetup: require.resolve('./global-setup'),
 	globalTeardown: require.resolve('./global-teardown'),

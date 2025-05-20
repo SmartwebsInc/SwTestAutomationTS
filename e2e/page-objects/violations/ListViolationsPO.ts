@@ -105,7 +105,10 @@ export class ListViolationsPO {
 		this.deleteViolationWarning = this.violationOptionsDrawer.getByText('Are you sure you want to delete this violation?');
 		this.addNoteTextarea = this.violationOptionsDrawer.getByPlaceholder('Add note').first().or(this.violationOptionsDrawer.getByLabel('Add note').first());
 		this.saveNoteButton = this.violationOptionsDrawer.getByRole('button', { name: 'Save Note' });
-		this.drawerCancelButton = this.violationOptionsDrawer.getByRole('button', { name: 'Cancel' }).first().or(this.violationOptionsDrawer.getByRole('button', { name: 'Close' }).first());
+		this.drawerCancelButton = this.violationOptionsDrawer
+			.getByRole('button', { name: 'Cancel' })
+			.first()
+			.or(this.violationOptionsDrawer.getByRole('button', { name: 'Close' }).first());
 		this.drawerHeaderTitle = this.violationOptionsDrawer.locator('.drawer-header-title, .drawer-header h2, .drawer-header h3');
 	}
 

@@ -9,7 +9,7 @@ export class QueuedPO {
 	readonly recreateAllLettersButton: Locator;
 	readonly processAllButton: Locator;
 	readonly previewAllButton: Locator;
-    
+
 	// Search and Filter Controls
 	readonly searchTypeSelect: Locator;
 	readonly searchInput: Locator;
@@ -19,7 +19,7 @@ export class QueuedPO {
 	readonly unitTagsSelect: Locator;
 	readonly sortBySelect: Locator;
 	readonly filterUsersSelect: Locator;
-    
+
 	// Table Elements
 	readonly totalItemsCount: Locator;
 	readonly cardViolation: Locator;
@@ -35,7 +35,7 @@ export class QueuedPO {
 		this.recreateAllLettersButton = page.locator('button:has-text(\'Recreate All Letters\')');
 		this.processAllButton = page.locator('button:has-text(\'Process All\')');
 		this.previewAllButton = page.locator('button:has-text(\'Preview All\')');
-        
+
 		// Initialize Search and Filter Controls
 		this.searchTypeSelect = page.locator('select:near(:text(\'Search\'))');
 		this.searchInput = page.locator('input[placeholder=\'Search ...\']');

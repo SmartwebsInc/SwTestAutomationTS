@@ -4,10 +4,8 @@ import { LoginPO } from '../../page-objects/login/LoginPO';
 import { Context } from 'vm';
 
 test.describe('Login Tests', () => {
-
-	test.beforeEach(async ( { page } ) => {
+	test.beforeEach(async ({ page }) => {
 		await page.goto('');
-
 	});
 
 	test('QWERTY should successfully sign in with correct credentials', async ({ browser, request, api, page, loginPO }) => {
@@ -26,9 +24,9 @@ test.describe('Login Tests', () => {
 		await expect(loginPO.alertMessage).toHaveText('Invalid username or password');
 	});
 
-	test('should verify various page links', async ( { page, loginPO } ) => {
+	test('should verify various page links', async ({ page, loginPO }) => {
 		let baseUrl = process.env.BASE_URL;
-		
+
 		await test.step('Verify Privacy Policy link', async () => {
 			await loginPO.openLink('Privacy Policy');
 			await expect(page).toHaveURL(/https:\/\/smartwebs\.com\/privacy-policy\/\?signin=.*/);

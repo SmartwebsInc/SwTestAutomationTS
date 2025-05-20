@@ -41,7 +41,7 @@ export class UserFormPO {
 
 		// Initialize form container
 		this.addUserDrawer = page.locator('#userManagementDrawerContent');
-        
+
 		// Initialize buttons
 		this.newUserButton = page.getByText('New User', { exact: true });
 		this.bulkAddButton = page.getByText('Bulk Add', { exact: true });

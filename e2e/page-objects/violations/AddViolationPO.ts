@@ -53,11 +53,7 @@ export class AddViolationPO {
 		await this.ownerName.fill(ownerNameInput);
 		await this.tableHelper.clickRowContainingText(ownerNameInput);
 		await this.setCategorySubcategory(category, subcategory);
-		await this.page.waitForResponse(
-			response => response.url().includes('SWWebService/Services/Simple/ViolationService.svc/SaveNewViolationEnc')
-            && response.status() === 200,
-			{ timeout: 30000 },
-		);
+		await this.page.waitForResponse((response) => response.url().includes('SWWebService/Services/Simple/ViolationService.svc/SaveNewViolationEnc') && response.status() === 200, { timeout: 30000 });
 		await this.sendButton.click();
 	}
 
@@ -66,11 +62,7 @@ export class AddViolationPO {
 		await this.ownerName.fill(ownerNameInput);
 		await this.tableHelper.clickRowContainingText(ownerNameInput);
 		await this.setCategorySubcategory(category, subcategory);
-		await this.page.waitForResponse(
-			response => response.url().includes('SWWebService/Services/Simple/ViolationService.svc/SaveNewViolationEnc')
-            && response.status() === 200,
-			{ timeout: 30000 },
-		);
+		await this.page.waitForResponse((response) => response.url().includes('SWWebService/Services/Simple/ViolationService.svc/SaveNewViolationEnc') && response.status() === 200, { timeout: 30000 });
 		await this.queueButton.click();
 	}
 }

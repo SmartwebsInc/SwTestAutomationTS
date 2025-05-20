@@ -43,7 +43,7 @@ test.describe('Violations Assessment Tests', () => {
 
 			// Assess the violation
 			await violationsPO.assessViolation();
-            
+
 			// Assert that the violation was assessed
 			await violationsPO.assessmentsPO.showDropdown.selectOption('Fines Assessed');
 			await violationsPO.searchViolation('Last Name', 'Lennon');

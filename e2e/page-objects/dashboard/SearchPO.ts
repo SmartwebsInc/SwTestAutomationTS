@@ -49,13 +49,7 @@ export class SearchPO {
 		await expect(await tableHelper.rowTable.first()).toHaveText(new RegExp(searchTerm));
 	}
 
-	async performAdvancedSearch(
-		association: string,
-		ownerName: string,
-		unitAddress: string,
-		mailingAddress: string,
-		accountNumber: string,
-	) {
+	async performAdvancedSearch(association: string, ownerName: string, unitAddress: string, mailingAddress: string, accountNumber: string) {
 		const tableHelper = new TableHelper(this.page);
 		await this.searchIcon.click();
 		await expect(this.searchPopup).toBeVisible();

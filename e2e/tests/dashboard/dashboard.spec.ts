@@ -77,13 +77,7 @@ test.describe('Dashboard Tests', () => {
 		await searchPage.performQuickSearch('Cypress Automation (DO NOT USE)', 'Lennon');
 
 		// Perform Advanced Search
-		await searchPage.performAdvancedSearch(
-			'Cypress Automation (DO NOT USE)',
-			'Cheshire',
-			'wonderland',
-			'wonderland',
-			'4Z4KB4',
-		);
+		await searchPage.performAdvancedSearch('Cypress Automation (DO NOT USE)', 'Cheshire', 'wonderland', 'wonderland', '4Z4KB4');
 	});
 
 	test('Should go to My Profile page and change role of user', async ({ page }) => {
@@ -106,7 +100,7 @@ test.describe('Dashboard Tests', () => {
 		await preferencesPage.changeArcReviewSettings('Project Name', '10');
 
 		await preferencesPage.verifyArcReviewSettings('Project Name', '10');
-        
+
 		await preferencesPage.changeArcReviewSettings('Owner Name', '25');
 
 		await preferencesPage.verifyArcReviewSettings('Owner Name', '25');

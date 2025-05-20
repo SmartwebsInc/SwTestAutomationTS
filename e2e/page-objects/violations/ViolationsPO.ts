@@ -76,13 +76,14 @@ export class ViolationsPO {
 	async searchViolation(searchOption: string, searchValue: string) {
 		await this.searchDropdownOptions.selectOption(searchOption);
 		await this.searchFilter.fill(searchValue);
-		await this.page.waitForResponse(response =>
-			(response.url().includes('GetUnits') ||
-            response.url().includes('GetQueuedViolations') ||
-            response.url().includes('GetViolationItemsToPrint') ||
-            response.url().includes('GetViolationsToAssess')) &&
-            response.status() === 200,
-		{ timeout: 30000 },
+		await this.page.waitForResponse(
+			(response) =>
+				(response.url().includes('GetUnits') ||
+					response.url().includes('GetQueuedViolations') ||
+					response.url().includes('GetViolationItemsToPrint') ||
+					response.url().includes('GetViolationsToAssess')) &&
+				response.status() === 200,
+			{ timeout: 30000 },
 		);
 		await this.searchButton.click();
 	}
@@ -94,11 +95,9 @@ export class ViolationsPO {
 		await this.listViolationsPO.openViolationWithTextInTable(searchValue);
 		await this.listViolationsPO.optionsButtonBottom.click();
 		await this.listViolationsPO.deleteStageOrViolationTab.click();
-		await this.page.waitForResponse(
-			response => response.url().includes('SWWebservice/Services/ViolationArea/ViolationAreaService.svc/DeleteViolatio') &&
-            response.status() === 200,
-			{ timeout: 30000 },
-		);
+		await this.page.waitForResponse((response) => response.url().includes('SWWebservice/Services/ViolationArea/ViolationAreaService.svc/DeleteViolatio') && response.status() === 200, {
+			timeout: 30000,
+		});
 		await this.listViolationsPO.deleteViolationButton.click();
 	}
 
@@ -107,21 +106,17 @@ export class ViolationsPO {
 		await this.printPO.printSendSelectedButton.click();
 		await this.common.combineButton.click();
 		await this.common.openButtonModal.click();
-		await this.page.waitForResponse(
-			response => response.url().includes('SWWebservice/Services/ViolationArea/ViolationAreaService.svc/PrintAndMail') &&
-            response.status() === 200,
-			{ timeout: 30000 },
-		);
+		await this.page.waitForResponse((response) => response.url().includes('SWWebservice/Services/ViolationArea/ViolationAreaService.svc/PrintAndMail') && response.status() === 200, {
+			timeout: 30000,
+		});
 		await this.common.yesButton.click();
 	}
 
 	async assessViolation() {
 		await this.assessmentsPO.cardViolation.click();
-		await this.page.waitForResponse(
-			response => response.url().includes('SWWebservice/Services/ViolationArea/ViolationAreaService.svc/AssessViolations') &&
-            response.status() === 200,
-			{ timeout: 30000 },
-		);
+		await this.page.waitForResponse((response) => response.url().includes('SWWebservice/Services/ViolationArea/ViolationAreaService.svc/AssessViolations') && response.status() === 200, {
+			timeout: 30000,
+		});
 		await this.assessmentsPO.assessSelectedButton.click();
 	}
 }

@@ -33,7 +33,7 @@ async function globalSetup(config: FullConfig) {
 		const page = await context.newPage();
 		const loginPO = new LoginPO(page);
 		await page.goto(process.env.BASE_URL || '');
-        
+
 		// Call the login method for super admin
 		await loginPO.login(process.env.ACC_SUPER_ADMIN_USERNAME, process.env.SUPER_ADMIN_PASSWORD);
 
@@ -57,7 +57,6 @@ async function globalSetup(config: FullConfig) {
 		console.log('Super Admin Storage State Saved');
 
 		await page.close();
-
 	} catch (error) {
 		console.error('Error during global setup:', error);
 		throw error;

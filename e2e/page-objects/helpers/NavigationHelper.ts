@@ -38,12 +38,9 @@ export class NavigationHelper {
 		await this.searchAssociationInput.pressSequentially(associationName);
 		await Promise.all([
 			this.getAssociationOption(associationName).click(),
-			this._page.waitForResponse(
-				response => response.url().includes('SWWebservice/Services/Simple/CommonService.svc/GetUserRights') && response.status() === 200,
-			),
+			this._page.waitForResponse((response) => response.url().includes('SWWebservice/Services/Simple/CommonService.svc/GetUserRights') && response.status() === 200),
 		]);
 		await this._page.waitForTimeout(500);
-
 	}
 
 	public getManageOption(optionName: string): Locator {
@@ -75,15 +72,12 @@ export class NavigationHelper {
 	public async leftMenuNavigation(...menuItems: string[]) {
 		await this.hamburgerMenu.click();
 		await this._page.waitForTimeout(500);
-	
+
 		for (let i = 0; i < menuItems.length; i++) {
-	
-			const items = i === 0
-				? await this.leftMenuItem.all()
-				: await this.leftMenuSubItem.all();
-	
+			const items = i === 0 ? await this.leftMenuItem.all() : await this.leftMenuSubItem.all();
+
 			let matched = false;
-	
+
 			for (const item of items) {
 				const text = await item.textContent();
 				if (text?.trim() === menuItems[i]) {
@@ -95,11 +89,10 @@ export class NavigationHelper {
 					break;
 				}
 			}
-	
+
 			if (!matched) {
 				throw new Error(`Menu item not found: "${menuItems[i]}"`);
 			}
 		}
 	}
-	
 }

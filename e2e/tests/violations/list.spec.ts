@@ -25,26 +25,17 @@ test.describe('List Violations Tests', () => {
 
 		// Wait for both the UI action and the API response
 		await Promise.all([
-			page.waitForResponse(response =>
-				response.url().includes('SWWebservice/Services/ViolationArea/ViolationAreaService.svc/GetUnits') &&
-                response.status() === 200,
-			),
+			page.waitForResponse((response) => response.url().includes('SWWebservice/Services/ViolationArea/ViolationAreaService.svc/GetUnits') && response.status() === 200),
 			violationsPO.listViolationsPO.allViolationsDropdown.selectOption('All Units'),
 		]);
 
 		const allUnits = await violationsPO.listViolationsPO.itemListViewViolation.allTextContents();
-        
+
 		// Assert
-		const names = [
-			'Katniss Everdeen',
-			'Mike Wazowski',
-			'Margot Tester',
-			'John Lennon',
-			'Cheshire Cat',
-		];
+		const names = ['Katniss Everdeen', 'Mike Wazowski', 'Margot Tester', 'John Lennon', 'Cheshire Cat'];
 
 		for (const name of names) {
-			expect(allUnits.some(unit => unit.includes(name))).toBeTruthy();
+			expect(allUnits.some((unit) => unit.includes(name))).toBeTruthy();
 		}
 
 		expect(allUnits.length > allViolations.length).toBeTruthy();

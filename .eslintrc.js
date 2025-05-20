@@ -3,31 +3,16 @@ module.exports = {
 		browser: true,
 		es2021: true,
 	},
-	extends: [
-		'eslint:recommended',
-		'plugin:@typescript-eslint/recommended',
-	],
+	extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		ecmaVersion: 'latest',
 	},
-	plugins: [
-		'@typescript-eslint',
-	],
+	plugins: ['@typescript-eslint'],
 	rules: {
-		indent: [
-			'error',
-			'tab',
-			{ SwitchCase: 1 },
-		],
-		quotes: [
-			'error',
-			'single',
-		],
-		semi: [
-			'error',
-			'always',
-		],
+		indent: ['error', 'tab', { SwitchCase: 1 }],
+		quotes: ['error', 'single'],
+		semi: ['error', 'always'],
 		'object-curly-spacing': ['error', 'always'],
 		'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
 		'comma-spacing': ['error', { before: false, after: true }],

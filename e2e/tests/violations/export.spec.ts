@@ -31,7 +31,7 @@ test.describe('Export Violations Tests', () => {
 
 		// Wait for the download to start
 		const download = await downloadPromise;
-        
+
 		// Verify the downloaded file has .pdf extension
 		expect(download.suggestedFilename()).toMatch(/\.pdf$/);
 

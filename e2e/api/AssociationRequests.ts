@@ -102,24 +102,21 @@ export class AssociationRequests {
 	// url has to be fixed and contains the encrypted management id like this:
 	// https://api-sworg.demo.smartwebs.com/SiteSetup/SetupAssociation?mgtIdEncrypted=AaavFNVy_PDnRBmn
 	async createAssociation(request: APIRequestContext, bearerToken: string, associationData: AssociationRequest) {
-		const createAssociationResponse = await request.post(
-			'SWWebservice/Services/AssociationArea/AssociationAreaService.svc/SaveAssociation',
-			{
-				data: associationData,
-				headers: {
-					'Authorization': `Bearer ${bearerToken}`,
-					'Content-Type': 'application/json;charset=UTF-8',
-					'Accept': 'application/json',
-				},
+		const createAssociationResponse = await request.post('SWWebservice/Services/AssociationArea/AssociationAreaService.svc/SaveAssociation', {
+			data: associationData,
+			headers: {
+				Authorization: `Bearer ${bearerToken}`,
+				'Content-Type': 'application/json;charset=UTF-8',
+				Accept: 'application/json',
 			},
-		);
-        
+		});
+
 		if (createAssociationResponse.status() !== 200) {
 			const responseText = await createAssociationResponse.text();
 			console.log('Error response:', responseText);
 			throw new Error(`API request failed with status ${createAssociationResponse.status()}: ${responseText}`);
 		}
-        
+
 		const responseText = await createAssociationResponse.text();
 		try {
 			const responseJson = JSON.parse(responseText);
